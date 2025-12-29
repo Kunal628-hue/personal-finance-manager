@@ -788,6 +788,18 @@ function navigateToPage(page) {
     }
 }
 
+// ===== Search Functionality =====
+function handleSearch(event) {
+    // Just re-render using the centralized filtering logic in getFilteredTransactions
+    // which already reads the current value of searchInput/transactionSearch.
+    render();
+}
+
+function handleTransactionSearch(event) {
+    // Same behavior for the transactions-page search bar
+    render();
+}
+
 // ===== Event Handlers =====
 function handleFormSubmit(e) {
     e.preventDefault();
@@ -922,11 +934,11 @@ function initApp() {
     
     // Search
     if (searchInput) {
-        searchInput.addEventListener('input', render);
+        searchInput.addEventListener('input', handleSearch);
     }
     
     if (transactionSearch) {
-        transactionSearch.addEventListener('input', render);
+        transactionSearch.addEventListener('input', handleTransactionSearch);
     }
     
     // Chart period selectors

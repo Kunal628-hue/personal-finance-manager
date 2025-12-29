@@ -269,25 +269,36 @@ body {
 
 .search-bar i {
   position: absolute;
-  left: 1rem;
+  left: 1.125rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-light);
+  pointer-events: none;
+  z-index: 1;
+  font-size: 0.875rem;
 }
 
 .search-bar input {
-  padding: 0.625rem 1rem 0.625rem 2.5rem;
+  padding: 0.625rem 1rem 0.625rem 2.75rem;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background: var(--bg-color);
+  border-radius: 9999px;
+  background: var(--card-bg);
   color: var(--text-color);
   font-size: 0.875rem;
   width: 250px;
   transition: all 0.2s;
+  position: relative;
+}
+
+.search-bar input::placeholder {
+  color: var(--text-light);
 }
 
 .search-bar input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+  background: var(--card-bg);
 }
 
 .theme-toggle {
@@ -555,19 +566,24 @@ body {
 
 .search-filter i {
   position: absolute;
-  left: 0.75rem;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--text-light);
   font-size: 0.875rem;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .search-filter input {
-  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
   color: var(--text-color);
   font-size: 0.875rem;
   width: 200px;
+  position: relative;
 }
 
 .transactions-list {
