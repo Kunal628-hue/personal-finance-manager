@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singhi FinDash - Personal Finance Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h2>Singhi FinDash</h2>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul>
+                <li class="nav-item active" data-page="dashboard">
+                    <a href="#dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="transactions">
+                    <a href="#transactions">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="budget">
+                    <a href="#budget">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Budget</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <a href="#reports">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <h4>User</h4>
+                    <span>Premium Member</span>
+                </div>
+            </div>
+            <button class="btn-logout" id="logoutBtn" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <div class="date-display">
+                        <i class="far fa-calendar-alt"></i>
+                        <span id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search transactions...">
+                </div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun" style="display: none;"></i>
+                </button>
+            </div>
+        </header>
+        
+        <main class="dashboard-content">
+            <!-- Dashboard Page -->
+            <div class="page" id="dashboard-page">
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="card balance-card">
+                        <div class="card-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Total Balance</span>
+                            <h3 class="card-amount" id="balance">₹0.00</h3>
+                            <span class="card-change" id="balanceChange">
+                                <i class="fas fa-minus"></i> No change
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="card income-card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Income</span>
+                            <h3 class="card-amount" id="totalIncome">₹0.00</h3>
+                            <span class="card-change positive">
+                                <i class="fas fa-arrow-up"></i> This month
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="card expense-card">
+                        <div class="card-icon">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-label">Expenses</span>
+                            <h3 class="card-amount" id="totalExpense">₹0.00</h3>
+                            <span class="card-change negative">
+                                <i class="fas fa-arrow-up"></i> This month
+                            </span>
+                        </div>
+                    </div>
+                    
+                <div class="card savings-card">
+                    <div class="card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-label">Savings Wallet</span>
+                        <h3 class="card-amount" id="savingsWallet">₹0.00</h3>
+                        <div class="progress-bar">
+                            <div class="progress" id="savingsProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="card-meta" id="savingsMeta">Total saved amount</span>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="dashboard-row">
+                    <!-- Monthly Overview Chart -->
+                    <div class="card chart-card">
+                        <div class="card-header">
+                            <h3>Monthly Overview</h3>
+                            <div class="card-actions">
+                                <select class="period-select" id="monthlyPeriod">
+                                    <option value="6">Last 6 Months</option>
+                                    <option value="12">Last 12 Months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Expense Categories -->
+                    <div class="card chart-card">
+                        <div class="card-header">
+                            <h3>Expense Categories</h3>
+                            <div class="card-actions">
+                                <select class="period-select" id="categoryPeriod">
+                                    <option value="month">This Month</option>
+                                    <option value="year">This Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Transactions -->
+                <div class="card transactions-card">
+                    <div class="card-header">
+                        <h3>Recent Transactions</h3>
+                        <button class="btn btn-primary btn-sm" id="addTransactionBtn">
+                            <i class="fas fa-plus"></i> Add New
+                        </button>
+                    </div>
+                    <div class="transactions-container">
+                        <div class="transactions-filters">
+                            <div class="tabs">
+                                <button class="tab-btn active" data-filter="all">All</button>
+                                <button class="tab-btn" data-filter="income">Income</button>
+                                <button class="tab-btn" data-filter="expense">Expenses</button>
+                            </div>
+                        </div>
+                        <div class="transactions-list" id="transactionList">
+                            <!-- Transactions will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions Page -->
+            <div class="page hidden" id="transactions-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>All Transactions</h3>
+                        <button class="btn btn-primary btn-sm" id="addTransactionBtn2">
+                            <i class="fas fa-plus"></i> Add New
+                        </button>
+                    </div>
+                    <div class="transactions-container">
+                        <div class="transactions-filters">
+                            <div class="tabs">
+                                <button class="tab-btn active" data-filter="all">All</button>
+                                <button class="tab-btn" data-filter="income">Income</button>
+                                <button class="tab-btn" data-filter="expense">Expenses</button>
+                            </div>
+                            <div class="search-filter">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="transactionSearch" placeholder="Search transactions...">
+                            </div>
+                        </div>
+                        <div class="transactions-list" id="allTransactionList">
+                            <!-- All transactions will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Page -->
+            <div class="page hidden" id="budget-page">
+                <div class="card budget-card">
+                    <div class="card-header">
+                        <h3>Budget Overview</h3>
+                        <button class="btn btn-primary btn-sm" id="createBudgetBtn">
+                            <i class="fas fa-plus"></i> Create Budget
+                        </button>
+                    </div>
+                    <div class="budget-categories" id="budgetCategories">
+                        <!-- Budget categories will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Page -->
+            <div class="page hidden" id="reports-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Financial Reports</h3>
+                        <select class="period-select">
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>This Year</option>
+                            <option>Last Year</option>
+                        </select>
+                    </div>
+                    <div class="reports-content">
+                        <div class="report-summary">
+                            <div class="report-item">
+                                <span class="report-label">Total Income</span>
+                                <span class="report-value" id="reportIncome">₹0.00</span>
+                            </div>
+                            <div class="report-item">
+                                <span class="report-label">Total Expenses</span>
+                                <span class="report-value" id="reportExpense">₹0.00</span>
+                            </div>
+                            <div class="report-item">
+                                <span class="report-label">Net Savings</span>
+                                <span class="report-value" id="reportSavings">₹0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Add Transaction Modal -->
+    <div class="modal" id="addTransactionModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Transaction</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <input type="text" id="desc" placeholder="e.g., Groceries, Salary" required>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="type">Type</label>
+                        <select id="type" class="select-style" required>
+                            <option value="expense">Expense</option>
+                            <option value="income">Income</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" class="select-style" required>
+                            <option value="Food">Food</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Bills">Bills</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Investment">Investment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="saveToWallet">
+                        <span><i class="fas fa-piggy-bank"></i> Save to Wallet</span>
+                        <small>This amount will be deducted from your balance and added to your savings wallet</small>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> Add Transaction
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Authentication JavaScript -->
+    <script src="auth.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="file.js"></script>
+</body>
+</html>
