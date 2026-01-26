@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
@@ -20,7 +22,7 @@
                 <i class="fas fa-bars"></i>
             </button>
         </div>
-        
+
         <nav class="sidebar-nav">
             <ul>
                 <li class="nav-item active" data-page="dashboard">
@@ -49,7 +51,7 @@
                 </li>
             </ul>
         </nav>
-        
+
         <div class="sidebar-footer">
             <div class="user-profile">
                 <div class="avatar">
@@ -83,7 +85,7 @@
             </div>
             <div class="header-actions">
                 <div class="search-bar">
-                    <i class="fas fa-search"></i>
+                    <!-- <i class="fas fa-search"></i> -->
                     <input type="text" id="searchInput" placeholder="Search transactions...">
                 </div>
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
@@ -92,7 +94,7 @@
                 </button>
             </div>
         </header>
-        
+
         <main class="dashboard-content">
             <!-- Dashboard Page -->
             <div class="page" id="dashboard-page">
@@ -110,7 +112,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="card income-card">
                         <div class="card-icon">
                             <i class="fas fa-arrow-down"></i>
@@ -123,7 +125,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="card expense-card">
                         <div class="card-icon">
                             <i class="fas fa-arrow-up"></i>
@@ -136,20 +138,20 @@
                             </span>
                         </div>
                     </div>
-                    
-                <div class="card savings-card">
-                    <div class="card-icon">
-                        <i class="fas fa-piggy-bank"></i>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-label">Savings Wallet</span>
-                        <h3 class="card-amount" id="savingsWallet">₹0.00</h3>
-                        <div class="progress-bar">
-                            <div class="progress" id="savingsProgress" style="width: 0%"></div>
+
+                    <div class="card savings-card">
+                        <div class="card-icon">
+                            <i class="fas fa-piggy-bank"></i>
                         </div>
-                        <span class="card-meta" id="savingsMeta">Total saved amount</span>
+                        <div class="card-content">
+                            <span class="card-label">Savings Wallet</span>
+                            <h3 class="card-amount" id="savingsWallet">₹0.00</h3>
+                            <div class="progress-bar">
+                                <div class="progress" id="savingsProgress" style="width: 0%"></div>
+                            </div>
+                            <span class="card-meta" id="savingsMeta">Total saved amount</span>
+                        </div>
                     </div>
-                </div>
                 </div>
 
                 <!-- Charts Row -->
@@ -169,7 +171,7 @@
                             <canvas id="monthlyChart"></canvas>
                         </div>
                     </div>
-                    
+
                     <!-- Expense Categories -->
                     <div class="card chart-card">
                         <div class="card-header">
@@ -186,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Recent Transactions -->
                 <div class="card transactions-card">
                     <div class="card-header">
@@ -285,7 +287,7 @@
             </div>
         </main>
     </div>
-    
+
     <!-- Add Transaction Modal -->
     <div class="modal" id="addTransactionModal">
         <div class="modal-overlay"></div>
@@ -354,4 +356,5 @@
     <!-- Custom JavaScript -->
     <script src="file.js"></script>
 </body>
+
 </html>

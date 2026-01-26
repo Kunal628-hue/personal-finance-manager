@@ -279,7 +279,7 @@ body {
 }
 
 .search-bar input {
-  padding: 0.625rem 1rem 0.625rem 2.75rem;
+  padding: 0.625rem 1rem 0.625rem 3rem;
   border: 1px solid var(--border-color);
   border-radius: 9999px;
   background: var(--card-bg);
@@ -288,6 +288,8 @@ body {
   width: 250px;
   transition: all 0.2s;
   position: relative;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .search-bar input::placeholder {
@@ -576,7 +578,7 @@ body {
 }
 
 .search-filter input {
-  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+  padding: 0.5rem 0.75rem 0.5rem 2.75rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: var(--card-bg);
@@ -584,6 +586,8 @@ body {
   font-size: 0.875rem;
   width: 200px;
   position: relative;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .transactions-list {
