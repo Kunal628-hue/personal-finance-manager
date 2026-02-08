@@ -22,7 +22,7 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 
         <nav class="sidebar-nav">
             <ul>
@@ -62,12 +62,20 @@
                     <h4>User</h4>
                 </div>
             </div>
-            <button class="btn-logout" id="logoutBtn" title="Logout">
+            <button class="btn-logout" id="resetDataBtn" title="Reset All Data"
+                style="margin-top: 0.5rem; background: rgba(245, 158, 11, 0.1); color: #f59e0b; border-color: rgba(245, 158, 11, 0.2);">
+                <i class="fas fa-trash-restore"></i>
+                <span>Reset</span>
+            </button>
+            <button class="btn-logout" id="logoutBtn" title="Logout" style="margin-top: 0.5rem;">
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </button>
         </div>
     </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -89,6 +97,10 @@
                     <!-- <i class="fas fa-search"></i> -->
                     <input type="text" id="searchInput" placeholder="Search transactions...">
                 </div>
+                <button id="calcToggle" class="theme-toggle" aria-label="Open Calculator" style="margin-right: 0.5rem;"
+                    title="Calculator">
+                    <i class="fas fa-calculator"></i>
+                </button>
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
                     <i class="fas fa-moon"></i>
                     <i class="fas fa-sun" style="display: none;"></i>
@@ -194,9 +206,11 @@
                 <div class="card transactions-card">
                     <div class="card-header">
                         <h3>Recent Transactions</h3>
-                        <button class="btn btn-primary btn-sm" id="addTransactionBtn">
-                            <i class="fas fa-plus"></i> Add New
-                        </button>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-sm" id="addTransactionBtn">
+                                <i class="fas fa-plus"></i> Add New
+                            </button>
+                        </div>
                     </div>
                     <div class="transactions-container">
                         <div class="transactions-filters">
@@ -218,9 +232,15 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>All Transactions</h3>
-                        <button class="btn btn-primary btn-sm" id="addTransactionBtn2">
-                            <i class="fas fa-plus"></i> Add New
-                        </button>
+                        <div class="card-actions">
+                            <button class="btn btn-sm" id="exportBtn"
+                                style="background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); margin-right: 0.5rem;">
+                                <i class="fas fa-file-export"></i> Export CSV
+                            </button>
+                            <button class="btn btn-primary btn-sm" id="addTransactionBtn2">
+                                <i class="fas fa-plus"></i> Add New
+                            </button>
+                        </div>
                     </div>
                     <div class="transactions-container">
                         <div class="transactions-filters">
@@ -261,14 +281,23 @@
                 <div class="card">
                     <div class="card-header">
                         <h3>Financial Reports</h3>
-                        <select class="period-select">
-                            <option>This Month</option>
-                            <option>Last Month</option>
-                            <option>This Year</option>
-                            <option>Last Year</option>
-                        </select>
+                        <div class="card-actions">
+                            <button class="btn btn-sm" id="exportReportBtn"
+                                style="background: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); margin-right: 0.5rem;">
+                                <i class="fas fa-file-export"></i> Export Report
+                            </button>
+                            <select class="period-select" id="reportPeriod">
+                                <option value="thisMonth">This Month</option>
+                                <option value="lastMonth">Last Month</option>
+                                <option value="thisYear">This Year</option>
+                                <option value="lastYear">Last Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="reports-content">
+                        <!-- Summary Stats -->
                         <div class="report-summary">
                             <div class="report-item">
                                 <span class="report-label">Total Income</span>
@@ -281,6 +310,31 @@
                             <div class="report-item">
                                 <span class="report-label">Net Savings</span>
                                 <span class="report-value" id="reportSavings">₹0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Charts Row -->
+                        <div class="dashboard-row" style="margin-top: 2rem;">
+                            <!-- Income vs Expense Chart -->
+                            <div class="card chart-card"
+                                style="box-shadow: none; border: 1px solid var(--border-color);">
+                                <div class="card-header">
+                                    <h3>Income vs Expense</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="reportHistoryChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Expense by Category Chart -->
+                            <div class="card chart-card"
+                                style="box-shadow: none; border: 1px solid var(--border-color);">
+                                <div class="card-header">
+                                    <h3>Expenses by Category</h3>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="reportCategoryChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -343,6 +397,65 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">
                     <i class="fas fa-plus"></i> Add Transaction
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Calculator Modal -->
+    <div class="modal" id="calculatorModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content calculator-content">
+            <div class="modal-header">
+                <h3>Calculator</h3>
+                <button class="close-modal" id="closeCalcModal">&times;</button>
+            </div>
+            <div class="calculator-body">
+                <input type="text" id="calcDisplay" readonly value="0">
+                <div class="calc-grid">
+                    <button class="btn-calc operator" data-action="all-clear">AC</button>
+                    <button class="btn-calc operator" data-action="delete"><i class="fas fa-backspace"></i></button>
+                    <button class="btn-calc operator" data-action="%">%</button>
+                    <button class="btn-calc operator" data-action="divide">÷</button>
+
+                    <button class="btn-calc" data-num="7">7</button>
+                    <button class="btn-calc" data-num="8">8</button>
+                    <button class="btn-calc" data-num="9">9</button>
+                    <button class="btn-calc operator" data-action="multiply">×</button>
+
+                    <button class="btn-calc" data-num="4">4</button>
+                    <button class="btn-calc" data-num="5">5</button>
+                    <button class="btn-calc" data-num="6">6</button>
+                    <button class="btn-calc operator" data-action="subtract">-</button>
+
+                    <button class="btn-calc" data-num="1">1</button>
+                    <button class="btn-calc" data-num="2">2</button>
+                    <button class="btn-calc" data-num="3">3</button>
+                    <button class="btn-calc operator" data-action="add">+</button>
+
+                    <button class="btn-calc" data-num="00">00</button>
+                    <button class="btn-calc" data-num="0">0</button>
+                    <button class="btn-calc" data-num=".">.</button>
+                    <button class="btn-calc equal" data-action="calculate">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Settings Modal -->
+    <div class="modal" id="budgetModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Set Budget Limits</h3>
+                <button class="close-modal" id="closeBudgetModal">&times;</button>
+            </div>
+            <form id="budgetForm">
+                <div id="budgetInputsContainer">
+                    <!-- Inputs generated by JS -->
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-save"></i> Save Budgets
                 </button>
             </form>
         </div>

@@ -59,6 +59,7 @@ body {
   top: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  height: 100dvh;
   background: var(--card-bg);
   border-right: 1px solid var(--border-color);
   display: flex;
@@ -344,6 +345,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -784,6 +786,7 @@ body {
     opacity: 0;
     transform: translateY(-20px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1005,7 +1008,7 @@ input[type="date"]:focus,
   .dashboard-row {
     grid-template-columns: 1fr;
   }
-  
+
   .summary-cards {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1015,39 +1018,39 @@ input[type="date"]:focus,
   .sidebar {
     transform: translateX(-100%);
   }
-  
+
   .sidebar.active {
     transform: translateX(0);
   }
-  
+
   .main-content {
     margin-left: 0;
   }
-  
+
   .mobile-menu-toggle {
     display: block;
   }
-  
+
   .menu-toggle {
     display: block;
   }
-  
+
   .summary-cards {
     grid-template-columns: 1fr;
   }
-  
+
   .header-actions {
     gap: 0.5rem;
   }
-  
+
   .search-bar input {
     width: 150px;
   }
-  
+
   .dashboard-content {
     padding: 1rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }
@@ -1058,21 +1061,168 @@ input[type="date"]:focus,
     padding: 1rem;
     flex-wrap: wrap;
   }
-  
+
   .header-left h1 {
     font-size: 1.25rem;
   }
-  
+
   .search-bar input {
     width: 120px;
     font-size: 0.8125rem;
   }
-  
+
   .card {
     padding: 1rem;
   }
-  
+
   .card-amount {
     font-size: 1.5rem;
   }
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 999;
+  /* Below sidebar (1000) but above content */
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Auth Pages Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.5rem;
+  }
+
+  .auth-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .auth-footer {
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .transaction-item {
+    padding: 0.75rem 1rem;
+  }
+
+  .transaction-title {
+    font-size: 0.875rem;
+  }
+
+  .transaction-amount {
+    font-size: 1rem;
+  }
+}
+
+/* Calculator Styles */
+.calculator-content {
+  max-width: 350px !important;
+}
+
+.calculator-body {
+  padding: 1.5rem;
+  background-color: var(--bg-color);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+#calcDisplay {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  font-size: 2rem;
+  text-align: right;
+  border: none;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-family: inherit;
+  font-weight: 600;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.btn-calc {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-calc:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--bg-color);
+}
+
+.btn-calc:active {
+  transform: translateY(0);
+}
+
+.btn-calc.operator {
+  color: var(--primary-color);
+  background-color: rgba(74, 108, 247, 0.1);
+}
+
+.btn-calc.operator:hover {
+  background-color: rgba(74, 108, 247, 0.2);
+}
+
+.btn-calc.equal {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-calc.equal:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Dark mode adjustments for calculator */
+[data-theme="dark"] .btn-calc {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .btn-calc:hover {
+  background-color: var(--bg-color);
+}
+
+[data-theme="dark"] .btn-calc.operator {
+  background-color: rgba(108, 138, 248, 0.15);
+  border-color: transparent;
+}
+
+[data-theme="dark"] .btn-calc.equal {
+  background-color: var(--primary-color);
+  border-color: transparent;
 }
